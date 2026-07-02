@@ -1,40 +1,65 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root, .light-theme {
+  --background: #f3f6fc;
+  --foreground: #1c2434;
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-bg-hover: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-border-hover: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+  --glass-shadow-hover: 0 12px 40px 0 rgba(31, 38, 135, 0.12);
+  --primary-color: #096dd9;
+  --border-divider: rgba(0, 0, 0, 0.05);
+  
+  --input-bg: rgba(255, 255, 255, 0.5);
+  --input-bg-hover: rgba(255, 255, 255, 0.7);
+  --input-bg-focus: rgba(255, 255, 255, 0.9);
+  
+  --table-header-bg: rgba(255, 255, 255, 0.55);
+  --table-row-hover: rgba(255, 255, 255, 0.35);
+  
+  --text-primary: #1c2434;
+  --text-secondary: #595959;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
+.dark-theme {
+  --background: #121212;
+  --foreground: #f8fafc;
+  --glass-bg: rgba(26, 26, 26, 0.55);
+  --glass-bg-hover: rgba(26, 26, 26, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --glass-shadow-hover: 0 12px 40px 0 rgba(0, 0, 0, 0.55);
+  --primary-color: #38bdf8;
+  --border-divider: rgba(255, 255, 255, 0.08);
+  
+  --input-bg: rgba(18, 18, 18, 0.5);
+  --input-bg-hover: rgba(24, 24, 24, 0.6);
+  --input-bg-focus: rgba(28, 28, 28, 0.85);
+  
+  --table-header-bg: rgba(24, 24, 24, 0.6);
+  --table-row-hover: rgba(255, 255, 255, 0.04);
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--background);
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -42,8 +67,436 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Custom Scrollbar for modern look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(9, 109, 217, 0.15);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(9, 109, 217, 0.35);
+}
+
+/* Liquid Blob Background Styles */
+.liquid-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, #f7f9fe 0%, #eef3fe 100%);
+  transition: background 0.4s ease;
+}
+
+.liquid-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transition: all 1s ease-in-out;
+}
+
+.blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(9, 109, 217, 0.35) 0%, rgba(9, 109, 217, 0) 70%);
+  top: -10%;
+  left: -10%;
+  animation: floatBlob1 25s infinite alternate ease-in-out;
+}
+
+.blob-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(82, 196, 26, 0.25) 0%, rgba(82, 196, 26, 0) 70%);
+  bottom: -10%;
+  right: -5%;
+  animation: floatBlob2 28s infinite alternate ease-in-out;
+}
+
+.blob-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.2) 0%, rgba(147, 51, 234, 0) 70%);
+  top: 40%;
+  left: 50%;
+  animation: floatBlob3 22s infinite alternate ease-in-out;
+}
+
+.blob-4 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(250, 173, 20, 0.2) 0%, rgba(250, 173, 20, 0) 70%);
+  bottom: 30%;
+  left: 10%;
+  animation: floatBlob1 18s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes floatBlob1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(100px, 80px) scale(1.1) rotate(45deg);
+  }
+  100% {
+    transform: translate(-50px, 150px) scale(0.9) rotate(90deg);
+  }
+}
+
+@keyframes floatBlob2 {
+  0% {
+    transform: translate(0, 0) scale(1.1);
+  }
+  50% {
+    transform: translate(-120px, -60px) scale(0.9) rotate(-30deg);
+  }
+  100% {
+    transform: translate(60px, -140px) scale(1.05) rotate(60deg);
+  }
+}
+
+@keyframes floatBlob3 {
+  0% {
+    transform: translate(0, 0) scale(0.9);
+  }
+  50% {
+    transform: translate(-80px, 100px) scale(1.15) rotate(15deg);
+  }
+  100% {
+    transform: translate(120px, -40px) scale(0.95) rotate(-45deg);
+  }
+}
+
+/* Dark Mode Liquid Background Overrides */
+.dark-theme .liquid-bg-container {
+  background: radial-gradient(circle at 50% 50%, #121212 0%, #0a0a0a 100%) !important;
+}
+
+.dark-theme .blob-1 {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(56, 189, 248, 0) 70%) !important;
+}
+
+.dark-theme .blob-2 {
+  background: radial-gradient(circle, rgba(82, 196, 26, 0.18) 0%, rgba(82, 196, 26, 0) 70%) !important;
+}
+
+.dark-theme .blob-3 {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(168, 85, 247, 0) 70%) !important;
+}
+
+.dark-theme .blob-4 {
+  background: radial-gradient(circle, rgba(250, 173, 20, 0.12) 0%, rgba(250, 173, 20, 0) 70%) !important;
+}
+
+/* Glassmorphism Overrides for Ant Design & Custom Classes */
+
+/* 1. Cards */
+.ant-card, .glass-card {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  border-radius: 16px !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  overflow: hidden;
+  color: var(--foreground);
+}
+
+.ant-card:hover, .glass-card:hover {
+  background: var(--glass-bg-hover) !important;
+  border-color: var(--glass-border-hover) !important;
+  box-shadow: var(--glass-shadow-hover) !important;
+  transform: translateY(-2px);
+}
+
+.ant-card-head {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(10px);
+  color: var(--text-primary) !important;
+}
+
+/* 2. Layout, Header, Sider */
+.ant-layout {
+  background: transparent !important;
+}
+
+.glass-header {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.3s ease;
+}
+
+.glass-sider {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(25px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(190%) !important;
+  border-right: 1px solid var(--glass-border) !important;
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+
+/* Sidebar Menu styling */
+.glass-sider .ant-menu {
+  background: transparent !important;
+  border-inline-end: none !important;
+}
+
+.glass-sider .ant-menu-item {
+  border-radius: 10px !important;
+  margin: 6px 12px !important;
+  width: calc(100% - 24px) !important;
+  color: var(--text-secondary) !important;
+  transition: all 0.2s ease;
+}
+
+.glass-sider .ant-menu-item:hover, 
+.glass-sider .ant-menu-submenu-title:hover {
+  background: rgba(9, 109, 217, 0.08) !important;
+  color: var(--primary-color) !important;
+}
+
+.glass-sider .ant-menu-item-selected {
+  background: rgba(9, 109, 217, 0.15) !important;
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+}
+
+.glass-sider .ant-menu-submenu-arrow {
+  color: var(--text-secondary) !important;
+}
+
+/* 3. Inputs & Selects */
+.ant-input, 
+.ant-input-number, 
+.ant-input-password,
+.ant-input-affix-wrapper,
+.ant-select-selector, 
+.ant-picker {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--glass-border) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-input-affix-wrapper .ant-input,
+.ant-input-affix-wrapper input {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-input-affix-wrapper .ant-input:focus,
+.ant-input-affix-wrapper input:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ant-input::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.7;
+}
+
+.ant-input:hover,
+.ant-input-number:hover,
+.ant-input-affix-wrapper:hover,
+.ant-select-selector:hover,
+.ant-picker:hover {
+  border-color: var(--primary-color) !important;
+  background: var(--input-bg-hover) !important;
+}
+
+.ant-input:focus, 
+.ant-input-number-focused, 
+.ant-input-affix-wrapper-focused,
+.ant-select-focused .ant-select-selector, 
+.ant-picker-focused {
+  background: var(--input-bg-focus) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* 4. Tables */
+.ant-table-wrapper {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  padding: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.ant-table {
+  background: transparent !important;
+}
+
+.ant-table-thead > tr > th {
+  background: var(--table-header-bg) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--glass-border) !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--glass-border) !important;
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: var(--table-row-hover) !important;
+}
+
+/* 5. Sticky Patient Banner */
+.sticky-patient-banner {
+  position: sticky;
+  top: 64px;
+  z-index: 999;
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(25px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.3s ease;
+  margin: 0 -24px 20px -24px;
+  padding: 14px 24px;
+}
+
+/* 6. Buttons */
+.ant-btn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+.ant-btn-primary {
+  box-shadow: 0 4px 12px rgba(9, 109, 217, 0.2) !important;
+}
+
+.ant-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(9, 109, 217, 0.3) !important;
+}
+
+/* 7. Drawer Glass styling */
+.glass-drawer .ant-drawer-content {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(30px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(190%) !important;
+}
+
+.glass-drawer .ant-drawer-header {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+}
+
+.glass-drawer .ant-drawer-title {
+  color: var(--text-primary) !important;
+}
+
+/* Editable Cell Wrap styling */
+.editable-cell-value-wrap {
+  padding: 6px 12px;
+  cursor: pointer;
+  min-height: 32px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  background: var(--input-bg);
+  transition: all 0.2s ease;
+}
+
+.editable-cell-value-wrap:hover {
+  border: 1px solid rgba(9, 109, 217, 0.3);
+  background: var(--input-bg-hover);
+}
+
+/* Text primary & secondary corrections */
+.ant-typography {
+  color: var(--text-primary) !important;
+}
+
+.ant-typography-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.ant-breadcrumb-link, .ant-breadcrumb-separator {
+  color: var(--text-secondary) !important;
+}
+
+.ant-list-item-meta-title {
+  color: var(--text-primary) !important;
+}
+
+.ant-list-item-meta-description {
+  color: var(--text-secondary) !important;
+}
+
+.ant-statistic-title {
+  color: var(--text-secondary) !important;
+}
+
+.ant-statistic-content {
+  color: var(--text-primary) !important;
+}
+
+.ant-timeline-item-label {
+  color: var(--text-secondary) !important;
+}
+
+.ant-timeline-item-content {
+  color: var(--text-primary) !important;
+}
+
+/* Dropdown styling */
+.ant-dropdown-menu {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid var(--glass-border) !important;
+}
+
+.ant-dropdown-menu-item {
+  color: var(--text-primary) !important;
+}
+
+.ant-dropdown-menu-item:hover {
+  background: var(--table-row-hover) !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 991.98px) {
+  .sticky-patient-banner {
+    top: 56px;
+    padding: 12px 16px;
+    margin: 0 -16px 16px -16px;
+  }
+  
+  .ant-table-wrapper {
+    padding: 2px;
   }
 }
